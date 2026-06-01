@@ -3,7 +3,7 @@
 venv/
 ENV/
 future_updates.txt
-amazon_product_data.db
+amazon_products_data.db
 # Python byte-code / caches
 __pycache__/
 *.pyc
