@@ -44,11 +44,19 @@ def price_of_all_products():
         formated_time = datetime.datetime.strftime(time_now,"%d/%m/%Y %H:%M:%S")
         conn.execute("INSERT INTO PRICES VALUES(?,?,?)",(row_id,price,formated_time))
 
-
+def tracking_history():
+    row_ids = conn.execute("SELECT ROWID,product_name FROM PRODUCTS").fetchall()
+    for i in row_ids:
+        row_id = i[0]
+        product_name = i[1]
+        data = conn.execute("SELECT PRICE,TIMESTAMP FROM PRICES WHERE PRODUCT_ID=?",[row_id]).fetchall()
+        for tuple in data :
+            print(product_name,tuple[1],tuple[0])
 
 while (True):
     print("\nMAIN MENU")
-    choice = input("1.add product\n2.show all products \n3.price of product\n4.delete product\n5.price of all products\n6.exit\nEnter choice:")
+    choice = input("1.add product\n2.show all products \n3.price of product\n4.delete product\n5.price of all products" \
+    "\n6.tracking history\n7.exit\nEnter choice:")
     match choice:
         case "1":
             add_product()
@@ -61,5 +69,7 @@ while (True):
         case "5":
             price_of_all_products()
         case "6":
+            tracking_history()
+        case "7":
             print("quitting program")
             break
